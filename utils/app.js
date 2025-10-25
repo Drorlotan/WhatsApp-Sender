@@ -1,3 +1,21 @@
+// Set console encoding for Hebrew text support
+process.stdout.setEncoding('utf8');
+
+// Function to detect Hebrew text and apply RTL alignment
+function isHebrewText(text) {
+    const hebrewRegex = /[\u0590-\u05FF]/;
+    return hebrewRegex.test(text);
+}
+
+// Function to format text with proper RTL alignment
+function formatRTLText(text) {
+    if (isHebrewText(text)) {
+        // Add RTL markers for Hebrew text
+        return '\u202E' + text + '\u202C';
+    }
+    return text;
+}
+
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const csv = require('csv-parser');
 const fs = require('fs');
@@ -278,7 +296,22 @@ async function main() {
     console.log(`📄 CSV file: ${csvFile}`);
     console.log(`📝 Text file: ${textFile}`);
     console.log(`🖼️  Image file: ${imageFile}`);
-    console.log(`💬 Message preview: ${textContent.substring(0, 100)}${textContent.length > 100 ? '...' : ''}`);
+    // Display message preview with proper Hebrew RTL alignment
+    console.log('💬 Message preview:');
+    console.log('─'.repeat(50));
+    const previewText = textContent.substring(0, 200);
+    const lines = previewText.split('\n');
+    lines.forEach(line => {
+        if (line.trim()) {
+            // Apply RTL formatting for Hebrew text
+            const formattedLine = formatRTLText(line.trim());
+            console.log(`   ${formattedLine}`);
+        }
+    });
+    if (textContent.length > 200) {
+        console.log('   ...');
+    }
+    console.log('─'.repeat(50));
     console.log();
     
     const messenger = new WhatsAppBulkMessenger();
