@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Bulk Messenger - Launcher</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #25D366;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #25D366;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .step h3 {
+            color: #128C7E;
+            margin-top: 0;
+        }
+        .button {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #128C7E;
+        }
+        .file-input {
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px dashed #25D366;
+            border-radius: 10px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 WhatsApp Bulk Messenger</h1>
+        
+        <div class="success">
+            <strong>✅ Ready to Use!</strong><br>
+            Your WhatsApp Bulk Messenger is installed and ready to send messages.
+        </div>
+
+        <div class="step">
+            <h3>🚀 Quick Start</h3>
+            <p>1. Prepare your files (CSV with phone numbers, text message, image)</p>
+            <p>2. Click "Run WhatsApp Sender" below</p>
+            <p>3. Follow the on-screen instructions</p>
+            <p>4. Scan QR code with your WhatsApp</p>
+        </div>
+
+        <div class="file-input">
+            <h4>📁 Your Files Should Look Like:</h4>
+            <p><strong>contacts.csv:</strong> +1234567890,John Doe,Company</p>
+            <p><strong>message.txt:</strong> Hello! This is my message.</p>
+            <p><strong>image.jpg:</strong> Your image file</p>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="button" onclick="runApp()">🚀 Run WhatsApp Sender</button>
+            <button class="button" onclick="openFolder()">📁 Open Folder</button>
+            <button class="button" onclick="showHelp()">❓ Help</button>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Important:</strong><br>
+            • Make sure all files are in the same folder<br>
+            • Use international phone format (+1234567890)<br>
+            • First time requires QR code scan<br>
+            • Keep your computer connected to internet
+        </div>
+
+        <div class="step">
+            <h3>📋 Command Line Alternative</h3>
+            <p>If you prefer command line, open Command Prompt in this folder and run:</p>
+            <code style="background: #f1f1f1; padding: 10px; display: block; border-radius: 5px;">
+                node app.js contacts.csv message.txt image.jpg
+            </code>
+        </div>
+    </div>
+
+    <script>
+        function runApp() {
+            // Try to run the batch file
+            if (confirm('This will start the WhatsApp Bulk Messenger. Continue?')) {
+                // For security reasons, we can't directly execute files from browser
+                alert('Please double-click "run-whatsapp-sender.bat" in the folder, or use Command Prompt with: node app.js contacts.csv message.txt image.jpg');
+            }
+        }
+
+        function openFolder() {
+            alert('Please navigate to the WhatsApp-Sender folder on your computer to find all the files.');
+        }
+
+        function showHelp() {
+            alert('Help:\n\n1. Make sure Node.js is installed\n2. All files must be in the same folder\n3. Use international phone format (+1234567890)\n4. First run requires QR code scan\n5. Check README.md for detailed instructions');
+        }
+    </script>
+</body>
+</html>
