@@ -111,7 +111,6 @@ class WhatsAppBulkMessenger {
                 try {
                     const numberId = await this.client.getNumberId(format);
                     if (numberId !== null) {
-                        console.log(`✅ Number ${phoneNumber} is registered on WhatsApp (ID: ${numberId._serialized})`);
                         return true;
                     }
                 } catch (formatError) {
@@ -148,29 +147,24 @@ class WhatsAppBulkMessenger {
 
             for (const format of formats) {
                 try {
-                    // Send text message and wait for response
-                    const textMessage = await this.client.sendMessage(format, textContent);
-                    console.log(`📤 Text message sent to ${format} (ID: ${textMessage.id._serialized})`);
+                    let message;
                     
-                    // Send image if provided
+                    // Send image with text caption if image is provided
                     if (imagePath && fs.existsSync(imagePath)) {
                         const media = MessageMedia.fromFilePath(imagePath);
-                        const imageMessage = await this.client.sendMessage(format, media);
-                        console.log(`🖼️  Image sent to ${format} (ID: ${imageMessage.id._serialized})`);
+                        message = await this.client.sendMessage(format, media, { caption: textContent });
+                    } else {
+                        // Send text message only if no image
+                        message = await this.client.sendMessage(format, textContent);
                     }
                     
                     messageSent = true;
-                    if (format !== phoneNumber) {
-                        console.log(`✅ Message sent using format: ${format}`);
-                    }
                     
                     // Add a small delay to ensure message is processed
                     await this.delay(1000);
-                    console.log(`✅ Message delivery confirmed for ${format}`);
                     break;
                 } catch (sendError) {
                     lastError = sendError;
-                    console.log(`❌ Failed to send to ${format}: ${sendError.message}`);
                     // Only show format failure if it's not the last format we're trying
                     if (format !== formats[formats.length - 1]) {
                         console.log(`⚠️  Trying alternative format for ${phoneNumber}...`);
@@ -196,21 +190,18 @@ class WhatsAppBulkMessenger {
             const phoneNumber = phoneNumbers[i];
             this.totalProcessed++;
             
-            console.log(`📱 [${i + 1}/${phoneNumbers.length}] Processing: ${phoneNumber}`);
-            
             const result = await this.sendMessage(phoneNumber, textContent, imagePath);
             
             if (result.success) {
                 this.successfulSends.push(phoneNumber);
-                console.log(`✅ Sent successfully to ${phoneNumber}`);
+                console.log(`✅ [${i + 1}/${phoneNumbers.length}] Sent to ${phoneNumber}`);
             } else {
                 this.failedSends.push({ number: phoneNumber, reason: result.message });
-                console.log(`❌ Failed to send to ${phoneNumber}: ${result.message}`);
+                console.log(`❌ [${i + 1}/${phoneNumbers.length}] Failed to ${phoneNumber}: ${result.message}`);
             }
             
             // Rate limiting - wait 2-3 seconds between messages
             if (i < phoneNumbers.length - 1) {
-                console.log('⏳ Waiting 2.5 seconds before next message...');
                 await this.delay(2500);
             }
         }

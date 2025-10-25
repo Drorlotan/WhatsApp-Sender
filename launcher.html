@@ -131,13 +131,39 @@
         function runApp() {
             // Try to run the batch file
             if (confirm('This will start the WhatsApp Bulk Messenger. Continue?')) {
-                // For security reasons, we can't directly execute files from browser
-                alert('Please double-click "run-whatsapp-sender.bat" in the folder, or use Command Prompt with: node app.js contacts.csv message.txt image.jpg');
+                // Create a link to the batch file
+                const link = document.createElement('a');
+                link.href = 'run-whatsapp-sender.bat';
+                link.download = '';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show a helpful message
+                setTimeout(() => {
+                    alert('The WhatsApp Bulk Messenger should now be starting!\n\nIf it doesn\'t work, you can also:\n• Double-click "run-whatsapp-sender.bat" in the folder\n• Or use Command Prompt: node app.js contacts.csv message.txt image.jpg');
+                }, 1000);
             }
         }
 
         function openFolder() {
-            alert('Please navigate to the WhatsApp-Sender folder on your computer to find all the files.');
+            // Try to open the folder using the batch file
+            if (confirm('This will open File Explorer showing your WhatsApp-Sender folder. You can browse all files visually. Continue?')) {
+                // Create a link to the batch file
+                const link = document.createElement('a');
+                link.href = 'open-folder.bat';
+                link.download = '';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show a helpful message
+                setTimeout(() => {
+                    alert('File Explorer should now be open!\n\nYou can browse and see all your files:\n• app.js\n• run-whatsapp-sender.bat\n• setup-for-beginners.bat\n• launcher.html\n• Your CSV, text, and image files\n\nJust click on any file to open it!');
+                }, 1500);
+            }
         }
 
         function showHelp() {

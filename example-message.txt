@@ -1,6 +1,6 @@
-Hello! This is a test message from the WhatsApp Bulk Messenger application. 
+שלום! זו הודעה בדיקה מאפליקציית WhatsApp Bulk Messenger.
 
-We hope you're doing well and wanted to share this important information with you.
+אנו מקווים שאתם מרגישים טוב ורצינו לשתף אתכם במידע חשוב זה.
 
-Best regards,
-Your Team
+בברכה,
+הצוות שלכם
